@@ -3,27 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Corridor Video Analyzer</title>
+<title>Corridor Video Analyzer v2</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;padding:14px;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",Arial,sans-serif;background:#eefdff;color:#173b3f}
-.wrap{max-width:900px;margin:auto}
-h1{text-align:center;color:#00796b;margin:10px 0 4px;font-size:28px}.sub{text-align:center;color:#4d6b70;margin-bottom:14px;font-weight:700}
+body{margin:0;padding:14px;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",Arial,sans-serif;background:linear-gradient(180deg,#eefdff,#f7ffff);color:#173b3f}
+.wrap{max-width:1000px;margin:auto}
+h1{text-align:center;color:#00796b;margin:10px 0 4px;font-size:30px}.sub{text-align:center;color:#4d6b70;margin-bottom:14px;font-weight:800}
 .panel{background:#fff;border-radius:24px;padding:16px;box-shadow:0 10px 26px rgba(0,0,0,.08);margin-bottom:14px}
 .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-label{display:block;font-weight:900;font-size:13px;margin:6px 0 4px;color:#244}input,select{width:100%;padding:12px;border:1px solid #cbdede;border-radius:14px;font-size:17px;background:#fff}
-video{width:100%;max-height:55vh;background:#000;border-radius:18px;margin-top:8px}.videoBtns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}.videoBtns button{min-height:46px;font-size:15px;background:#455a64}
+label{display:block;font-weight:900;font-size:13px;margin:6px 0 4px;color:#244}input{width:100%;padding:12px;border:1px solid #cbdede;border-radius:14px;font-size:17px;background:#fff}
+video{width:100%;max-height:58vh;background:#000;border-radius:18px;margin-top:8px;outline:none}.videoBtns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}.videoBtns button{min-height:46px;font-size:15px;background:#455a64}
 .status{margin:12px 0;padding:12px;border-radius:16px;background:#e2f6f4;text-align:center;font-size:21px;font-weight:1000}.done{background:#dff7e8;color:#087b31}
 .cards{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}.card{background:#f8fbfb;border:1px solid #dceeee;border-radius:18px;text-align:center;padding:10px 4px}.card .label{font-size:13px;font-weight:1000;color:#355}.num{font-size:38px;font-weight:1000;line-height:1.05}.contra{color:#1565c0}.ipsi{color:#d32f2f}.total{color:#00796b}.pct{color:#6a1b9a}
 .mainBtns{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}button{border:0;border-radius:20px;font-weight:1000;color:white;touch-action:manipulation;user-select:none;cursor:pointer}.big{min-height:128px;font-size:30px}#contraBtn{background:#1976d2}#ipsiBtn{background:#d32f2f}
-.smallBtns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.smallBtns button{min-height:52px;font-size:16px}#undoBtn{background:#fb8c00}#saveBtn{background:#00897b}#exportBtn{background:#455a64}#resetBtn{background:#666}#clearAllBtn{background:#8e24aa}
-.note{font-size:14px;line-height:1.5;color:#5a3d66;margin-top:10px}.tableWrap{overflow:auto;margin-top:10px;border-radius:14px;border:1px solid #e1eeee}table{width:100%;border-collapse:collapse;background:#fff;font-size:14px}th{background:#d8f3ee;color:#234;padding:8px;white-space:nowrap}td{border-bottom:1px solid #e7eeee;padding:8px;text-align:center;white-space:nowrap}
-@media(max-width:650px){.grid{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr 1fr}.big{min-height:120px;font-size:26px}.smallBtns,.videoBtns{grid-template-columns:1fr 1fr}h1{font-size:24px}}
+.smallBtns{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}.smallBtns button{min-height:52px;font-size:16px}#undoBtn{background:#fb8c00}#saveBtn{background:#00897b}#exportBtn{background:#455a64}#resetBtn{background:#666}#clearAllBtn{background:#8e24aa}
+.note{font-size:14px;line-height:1.6;color:#5a3d66;margin-top:10px;background:#faf5ff;border:1px solid #ecd9ff;border-radius:14px;padding:10px}.tableWrap{overflow:auto;margin-top:10px;border-radius:14px;border:1px solid #e1eeee}table{width:100%;border-collapse:collapse;background:#fff;font-size:14px}th{background:#d8f3ee;color:#234;padding:8px;white-space:nowrap}td{border-bottom:1px solid #e7eeee;padding:8px;text-align:center;white-space:nowrap}
+.logBox{max-height:180px;overflow:auto;background:#f8fbfb;border:1px solid #dceeee;border-radius:14px;padding:8px;margin-top:10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}.logItem{display:flex;justify-content:space-between;border-bottom:1px solid #e7eeee;padding:4px 2px}.logItem:last-child{border-bottom:0}
+@media(max-width:700px){.grid{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr 1fr}.big{min-height:120px;font-size:26px}.smallBtns,.videoBtns{grid-template-columns:1fr 1fr}h1{font-size:24px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<h1>Corridor Video Analyzer</h1>
+<h1>Corridor Video Analyzer v2</h1>
 <div class="sub">右側 = Ipsi；左側 = Contra｜Contra % = Contra / Total × 100</div>
 
 <div class="panel">
@@ -34,89 +35,248 @@ video{width:100%;max-height:55vh;background:#000;border-radius:18px;margin-top:8
   </div>
   <div class="grid2">
     <div><label>Day / Trial</label><input id="trial" placeholder="Day14 / BT2-COR"></div>
-    <div><label>影片檔案</label><input id="videoFile" type="file" accept="video/*"></div>
+    <div><label>上傳影片</label><input id="videoFile" type="file" accept="video/*,.mov,.mp4"></div>
   </div>
+
   <video id="video" controls playsinline></video>
   <div class="videoBtns">
-    <button onclick="togglePlay()">播放 / 暫停</button>
-    <button onclick="seek(-1)">-1 秒</button>
-    <button onclick="seek(1)">+1 秒</button>
-    <button onclick="seek(-0.1)">-0.1 秒</button>
+    <button id="backBtn">← 退 1 秒</button>
+    <button id="playBtn">播放 / 暫停</button>
+    <button id="forwardBtn">進 1 秒 →</button>
+    <button id="speedBtn">速度 1.0×</button>
   </div>
-  <div class="note">快捷鍵：Space = 播放/暫停；A = Contra 左側；L = Ipsi 右側；Z = 復原。</div>
-</div>
 
-<div class="panel">
   <div id="status" class="status">進行中：0 / 20</div>
+
   <div class="cards">
-    <div class="card"><div class="label">Contra<br><small>左側</small></div><div id="contraCount" class="num contra">0</div></div>
-    <div class="card"><div class="label">Ipsi<br><small>右側</small></div><div id="ipsiCount" class="num ipsi">0</div></div>
+    <div class="card"><div class="label">Contra<br><small>左側｜A</small></div><div id="contraCount" class="num contra">0</div></div>
+    <div class="card"><div class="label">Ipsi<br><small>右側｜S</small></div><div id="ipsiCount" class="num ipsi">0</div></div>
     <div class="card"><div class="label">Total</div><div id="totalCount" class="num total">0</div></div>
-    <div class="card"><div class="label">Contra %</div><div id="contraPercent" class="num pct">0.0</div></div>
+    <div class="card"><div class="label">Contra %</div><div id="contraPercent" class="num pct">0.0%</div></div>
   </div>
+
   <div class="mainBtns">
-    <button id="contraBtn" class="big" onclick="add('contra')">CONTRA<br><span style="font-size:21px">左側</span></button>
-    <button id="ipsiBtn" class="big" onclick="add('ipsi')">IPSI<br><span style="font-size:21px">右側</span></button>
+    <button id="contraBtn" class="big">CONTRA<br><span style="font-size:21px">左側｜A</span></button>
+    <button id="ipsiBtn" class="big">IPSI<br><span style="font-size:21px">右側｜S</span></button>
   </div>
+
   <div class="smallBtns">
-    <button id="undoBtn" onclick="undo()">復原</button>
-    <button id="saveBtn" onclick="saveMouse()">儲存小鼠</button>
-    <button id="exportBtn" onclick="exportExcel()">匯出 Excel</button>
-    <button id="resetBtn" onclick="resetCurrent()">重設目前</button>
+    <button id="undoBtn">復原 Z</button>
+    <button id="saveBtn">儲存 D</button>
+    <button id="exportBtn">匯出 Excel</button>
+    <button id="resetBtn">重設目前</button>
+    <button id="clearAllBtn">清除全部</button>
+  </div>
+
+  <div class="note">
+    Mac 快捷鍵：<b>A = Contra 左側</b>、<b>S = Ipsi 右側</b>、<b>Z = Undo</b>、<b>D = Save Mouse</b>、<b>空白鍵 = 播放/暫停</b>。<br>
+    每次按 A/S 都會自動記錄影片秒數。達到目標次數後停止計數，但不會發出任何聲音。
   </div>
 </div>
 
 <div class="panel">
-  <b>Event Log（每次按鍵的影片時間）</b>
-  <div class="tableWrap"><table><thead><tr><th>#</th><th>影片時間(s)</th><th>Side</th></tr></thead><tbody id="events"></tbody></table></div>
+  <h3>目前這隻小鼠 Event Log</h3>
+  <div id="log" class="logBox">尚未記錄</div>
 </div>
 
 <div class="panel">
-  <b>Saved Mice</b>
-  <div class="tableWrap"><table><thead><tr><th>時間</th><th>Mouse</th><th>Group</th><th>Trial</th><th>Contra</th><th>Ipsi</th><th>Total</th><th>Contra %</th></tr></thead><tbody id="records"></tbody></table></div>
-  <div class="smallBtns" style="grid-template-columns:1fr"><button id="clearAllBtn" onclick="clearAll()">清除所有已儲存資料</button></div>
+  <h3>已儲存結果</h3>
+  <div class="tableWrap">
+    <table>
+      <thead><tr><th>時間</th><th>小鼠</th><th>Group</th><th>Trial</th><th>Contra</th><th>Ipsi</th><th>Total</th><th>Contra %</th></tr></thead>
+      <tbody id="records"></tbody>
+    </table>
+  </div>
 </div>
 </div>
 
 <script>
-let contra=0, ipsi=0, history=[], rows=[];
-const $=id=>document.getElementById(id);
-const video=$('video');
-$('videoFile').addEventListener('change', e=>{ const f=e.target.files[0]; if(f){ video.src=URL.createObjectURL(f); }});
-function getLimit(){return Math.max(1, parseInt($('limit').value||20));}
-function total(){return contra+ipsi;}
-function pct(){return total()? contra/total()*100:0;}
-function done(){return total()>=getLimit();}
-function vtime(){return video && !isNaN(video.currentTime)? video.currentTime:0;}
-function fmt(t){return Number(t).toFixed(2);}
+let contra = 0;
+let ipsi = 0;
+let history = [];
+let currentEvents = [];
+let rows = [];
+let allEvents = [];
+let speedList = [0.5, 0.75, 1, 1.25, 1.5, 2];
+let speedIndex = 2;
+
+const $ = id => document.getElementById(id);
+const video = $('video');
+
+function getLimit(){
+  return Math.max(1, parseInt($('limit').value || 20));
+}
+function total(){ return contra + ipsi; }
+function pct(){ return total() ? contra / total() * 100 : 0; }
+function isDone(){ return total() >= getLimit(); }
+function videoTime(){ return isNaN(video.currentTime) ? 0 : video.currentTime; }
+function fmtSec(sec){ return Number(sec).toFixed(2); }
+function fmtClock(sec){
+  sec = Math.max(0, sec || 0);
+  const m = Math.floor(sec/60);
+  const s = (sec%60).toFixed(2).padStart(5,'0');
+  return `${m}:${s}`;
+}
+
 function update(){
- $('contraCount').textContent=contra; $('ipsiCount').textContent=ipsi; $('totalCount').textContent=total(); $('contraPercent').textContent=pct().toFixed(1);
- $('status').textContent=done()? '✅ Completed：'+total()+' / '+getLimit() : '進行中：'+total()+' / '+getLimit();
- $('status').className='status '+(done()?'done':'');
- renderEvents();
+  $('contraCount').textContent = contra;
+  $('ipsiCount').textContent = ipsi;
+  $('totalCount').textContent = total();
+  $('contraPercent').textContent = pct().toFixed(1) + '%';
+  $('status').textContent = isDone() ? `✅ Completed：${total()} / ${getLimit()}` : `進行中：${total()} / ${getLimit()}`;
+  $('status').className = 'status' + (isDone() ? ' done' : '');
+  renderLog();
 }
-function add(side){ if(done()) return; history.push({side:side,time:vtime()}); if(side==='contra') contra++; else ipsi++; update(); }
-function undo(){ const last=history.pop(); if(!last)return; if(last.side==='contra') contra--; else ipsi--; update(); }
-function resetCurrent(){ contra=0; ipsi=0; history=[]; update(); }
-function togglePlay(){ if(video.paused) video.play(); else video.pause(); }
-function seek(s){ video.currentTime=Math.max(0,(video.currentTime||0)+s); }
-function renderEvents(){ $('events').innerHTML=history.map((e,i)=>`<tr><td>${i+1}</td><td>${fmt(e.time)}</td><td>${e.side==='contra'?'Contra 左側':'Ipsi 右側'}</td></tr>`).join(''); }
+
+function add(side){
+  if(isDone()) return;
+  const t = videoTime();
+  const event = {
+    mouse: $('mouseId').value || '',
+    group: $('group').value || '',
+    trial: $('trial').value || '',
+    side,
+    timeSec: fmtSec(t),
+    timeClock: fmtClock(t)
+  };
+  history.push(event);
+  currentEvents.push(event);
+  if(side === 'contra') contra++;
+  if(side === 'ipsi') ipsi++;
+  update();
+}
+
+function undo(){
+  const last = history.pop();
+  if(!last) return;
+  currentEvents.pop();
+  if(last.side === 'contra') contra = Math.max(0, contra - 1);
+  if(last.side === 'ipsi') ipsi = Math.max(0, ipsi - 1);
+  update();
+}
+
+function resetCurrent(){
+  contra = 0;
+  ipsi = 0;
+  history = [];
+  currentEvents = [];
+  update();
+}
+
 function saveMouse(){
- rows.push({saved:new Date().toLocaleString(), mouse:$('mouseId').value||'', group:$('group').value||'', trial:$('trial').value||'', contra, ipsi, total:total(), percent:pct().toFixed(1), events:JSON.parse(JSON.stringify(history))});
- renderRows(); resetCurrent();
+  const mouse = $('mouseId').value || '';
+  const group = $('group').value || '';
+  const trial = $('trial').value || '';
+  const row = {
+    savedAt: new Date().toLocaleString(),
+    mouse, group, trial,
+    contra, ipsi,
+    total: total(),
+    percent: pct().toFixed(1)
+  };
+  rows.push(row);
+  currentEvents.forEach((ev, i) => {
+    allEvents.push({
+      savedAt: row.savedAt,
+      mouse, group, trial,
+      eventNo: i + 1,
+      side: ev.side === 'contra' ? 'Contra' : 'Ipsi',
+      timeSec: ev.timeSec,
+      timeClock: ev.timeClock
+    });
+  });
+  renderRows();
+  resetCurrent();
 }
-function renderRows(){ $('records').innerHTML=rows.map(r=>`<tr><td>${r.saved}</td><td>${r.mouse}</td><td>${r.group}</td><td>${r.trial}</td><td>${r.contra}</td><td>${r.ipsi}</td><td>${r.total}</td><td>${r.percent}</td></tr>`).join(''); }
-function clearAll(){ if(confirm('確定清除所有已儲存資料？')){rows=[];renderRows();}}
+
+function renderRows(){
+  $('records').innerHTML = rows.map(r => `
+    <tr>
+      <td>${r.savedAt}</td><td>${r.mouse}</td><td>${r.group}</td><td>${r.trial}</td>
+      <td>${r.contra}</td><td>${r.ipsi}</td><td>${r.total}</td><td>${r.percent}</td>
+    </tr>`).join('');
+}
+
+function renderLog(){
+  if(currentEvents.length === 0){
+    $('log').textContent = '尚未記錄';
+    return;
+  }
+  $('log').innerHTML = currentEvents.map((e, i) => `
+    <div class="logItem"><span>#${i+1} ${e.side === 'contra' ? 'Contra 左側' : 'Ipsi 右側'}</span><span>${e.timeClock} (${e.timeSec}s)</span></div>
+  `).join('');
+}
+
+function clearAll(){
+  if(!confirm('確定要清除所有已儲存結果與目前計數？')) return;
+  rows = [];
+  allEvents = [];
+  resetCurrent();
+  renderRows();
+}
+
 function exportExcel(){
- let summary='<table><tr><th>Saved time</th><th>Mouse</th><th>Group</th><th>Trial</th><th>Contralateral</th><th>Ipsilateral</th><th>Total</th><th>Contralateral_percent</th></tr>';
- rows.forEach(r=>{summary+=`<tr><td>${r.saved}</td><td>${r.mouse}</td><td>${r.group}</td><td>${r.trial}</td><td>${r.contra}</td><td>${r.ipsi}</td><td>${r.total}</td><td>${r.percent}</td></tr>`}); summary+='</table>';
- let events='<table><tr><th>Mouse</th><th>Group</th><th>Trial</th><th>Event_number</th><th>Video_time_sec</th><th>Side</th></tr>';
- rows.forEach(r=>{r.events.forEach((e,i)=>{events+=`<tr><td>${r.mouse}</td><td>${r.group}</td><td>${r.trial}</td><td>${i+1}</td><td>${fmt(e.time)}</td><td>${e.side==='contra'?'Contra_Left':'Ipsi_Right'}</td></tr>`})}); events+='</table>';
- const html=`<html><head><meta charset="UTF-8"></head><body><h2>Summary</h2>${summary}<br><h2>Event Log</h2>${events}</body></html>`;
- const blob=new Blob(['\ufeff'+html],{type:'application/vnd.ms-excel;charset=utf-8;'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='corridor_video_results.xls'; a.click(); URL.revokeObjectURL(url);
+  const summaryHeader = '<tr><th>Saved At</th><th>Mouse</th><th>Group</th><th>Trial</th><th>Contra</th><th>Ipsi</th><th>Total</th><th>Contra %</th></tr>';
+  const summaryRows = rows.map(r => `<tr><td>${r.savedAt}</td><td>${r.mouse}</td><td>${r.group}</td><td>${r.trial}</td><td>${r.contra}</td><td>${r.ipsi}</td><td>${r.total}</td><td>${r.percent}</td></tr>`).join('');
+  const eventHeader = '<tr><th>Saved At</th><th>Mouse</th><th>Group</th><th>Trial</th><th>Event No</th><th>Side</th><th>Video Time (s)</th><th>Video Time</th></tr>';
+  const eventRows = allEvents.map(e => `<tr><td>${e.savedAt}</td><td>${e.mouse}</td><td>${e.group}</td><td>${e.trial}</td><td>${e.eventNo}</td><td>${e.side}</td><td>${e.timeSec}</td><td>${e.timeClock}</td></tr>`).join('');
+  const html = `
+    <html><head><meta charset="UTF-8"></head><body>
+      <h2>Corridor Summary</h2><table border="1">${summaryHeader}${summaryRows}</table>
+      <h2>Event Log</h2><table border="1">${eventHeader}${eventRows}</table>
+    </body></html>`;
+  const blob = new Blob(['\ufeff' + html], {type:'application/vnd.ms-excel;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'corridor_video_results.xls';
+  a.click();
+  URL.revokeObjectURL(url);
 }
-$('limit').onchange=update;
-document.addEventListener('keydown',e=>{ const tag=(document.activeElement.tagName||'').toLowerCase(); if(tag==='input') return; const k=e.key.toLowerCase(); if(k===' '){e.preventDefault();togglePlay();} if(k==='a') add('contra'); if(k==='l') add('ipsi'); if(k==='z') undo(); });
+
+function togglePlay(){
+  if(!video.src) return;
+  if(video.paused) video.play(); else video.pause();
+}
+
+$('videoFile').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if(!file) return;
+  const url = URL.createObjectURL(file);
+  video.src = url;
+  video.load();
+  window.focus();
+});
+
+$('contraBtn').onclick = () => add('contra');
+$('ipsiBtn').onclick = () => add('ipsi');
+$('undoBtn').onclick = undo;
+$('saveBtn').onclick = saveMouse;
+$('resetBtn').onclick = resetCurrent;
+$('clearAllBtn').onclick = clearAll;
+$('exportBtn').onclick = exportExcel;
+$('limit').onchange = update;
+$('playBtn').onclick = togglePlay;
+$('backBtn').onclick = () => { video.currentTime = Math.max(0, video.currentTime - 1); };
+$('forwardBtn').onclick = () => { video.currentTime = Math.min(video.duration || 999999, video.currentTime + 1); };
+$('speedBtn').onclick = () => {
+  speedIndex = (speedIndex + 1) % speedList.length;
+  video.playbackRate = speedList[speedIndex];
+  $('speedBtn').textContent = `速度 ${speedList[speedIndex]}×`;
+};
+
+window.addEventListener('click', () => window.focus());
+document.addEventListener('keydown', e => {
+  const tag = (e.target.tagName || '').toLowerCase();
+  if(tag === 'input' || tag === 'textarea') return;
+  const key = e.key.toLowerCase();
+  if(key === 'a') { e.preventDefault(); add('contra'); }
+  if(key === 's') { e.preventDefault(); add('ipsi'); }
+  if(key === 'z') { e.preventDefault(); undo(); }
+  if(key === 'd') { e.preventDefault(); saveMouse(); }
+  if(e.code === 'Space') { e.preventDefault(); togglePlay(); }
+});
+
 update();
 </script>
 </body>
