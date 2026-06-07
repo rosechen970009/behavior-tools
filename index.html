@@ -1,54 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<title>Behavior Tools</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PD Behavioral Analysis Suite</title>
 <style>
-body{
-font-family:Arial,sans-serif;
-background:#eefcff;
-text-align:center;
-padding:50px;
-}
-
-h1{
-color:#00796b;
-}
-
-a{
-display:block;
-width:300px;
-margin:20px auto;
-padding:20px;
-background:#00796b;
-color:white;
-font-size:24px;
-text-decoration:none;
-border-radius:15px;
-}
-
-a:hover{
-background:#009688;
-}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif;background:linear-gradient(180deg,#eefdff,#f8ffff);color:#173b3f;padding:28px 14px}
+.wrap{max-width:900px;margin:0 auto}
+.hero{text-align:center;margin:20px 0 28px}
+.badge{display:inline-block;background:#dff7f2;color:#00796b;border:1px solid #bfe7df;padding:8px 14px;border-radius:999px;font-weight:800;font-size:14px}
+h1{font-size:38px;margin:18px 0 8px;color:#00796b;letter-spacing:.2px}
+.subtitle{font-size:17px;color:#49666a;margin:0 auto;line-height:1.6;max-width:620px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+a.card{text-decoration:none;color:inherit;background:#fff;border:1px solid #d8eeee;border-radius:24px;padding:24px 18px;min-height:230px;box-shadow:0 10px 26px rgba(0,0,0,.08);display:flex;flex-direction:column;justify-content:space-between;transition:.18s transform,.18s box-shadow}
+a.card:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(0,0,0,.12)}
+.icon{font-size:42px;margin-bottom:10px}
+h2{font-size:24px;margin:0 0 10px;color:#006d60}
+p{margin:0;color:#526b70;line-height:1.55;font-size:15px}.pill{margin-top:18px;background:#00796b;color:white;text-align:center;border-radius:16px;padding:12px 10px;font-weight:900}.footer{text-align:center;margin-top:28px;color:#6c7c80;font-size:13px}.note{background:#ffffffb8;border:1px solid #d8eeee;border-radius:18px;padding:14px 16px;margin-top:18px;color:#49666a;line-height:1.6}
+@media(max-width:760px){.grid{grid-template-columns:1fr}h1{font-size:30px}a.card{min-height:190px}.hero{margin-top:8px}}
 </style>
 </head>
-
 <body>
+<div class="wrap">
+  <section class="hero">
+    <div class="badge">Rose Lab · 6-OHDA PD behavior tools</div>
+    <h1>PD Behavioral Analysis Suite</h1>
+    <p class="subtitle">整合 Corridor Test、Vertical Grid 與 Beam Test 的影片/行為分析工具。適合手機與電腦使用，結果可匯出 Excel。</p>
+  </section>
 
-<h1>Behavior Analysis Tools</h1>
+  <section class="grid">
+    <a class="card" href="./corridor-test/">
+      <div>
+        <div class="icon">🧭</div>
+        <h2>Corridor Test</h2>
+        <p>記錄 Contra / Ipsi 次數，自動計算 Contralateral %。</p>
+      </div>
+      <div class="pill">Open Corridor</div>
+    </a>
 
-<a href="./corridor-test/">
-Corridor Test
-</a>
+    <a class="card" href="./vertical-grid/">
+      <div>
+        <div class="icon">🧗</div>
+        <h2>Vertical Grid</h2>
+        <p>標記 turn time、descent time，並記錄下爬後腳步數。</p>
+      </div>
+      <div class="pill">Open Vertical Grid</div>
+    </a>
 
-<a href="./vertical-grid/">
-Vertical Grid
-</a>
+    <a class="card" href="./beam-test/">
+      <div>
+        <div class="icon">🐭</div>
+        <h2>Beam Test</h2>
+        <p>分析通過時間、foot slips、hindlimb slips、fall 與 exclude。</p>
+      </div>
+      <div class="pill">Open Beam Test</div>
+    </a>
+  </section>
 
-<a href="./beam-test/">
-Beam Test
-</a>
-
+  <div class="note">使用方式：點選工具 → 上傳或分析影片 → 儲存每隻小鼠 trial → 匯出 Excel 檔案。</div>
+  <div class="footer">Behavior Tools v1.0</div>
+</div>
 </body>
 </html>
