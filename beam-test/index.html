@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="Beam Test" />
+<title>Beam Test Analyzer</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;padding:14px;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif;background:#eefaff;color:#173b3f}
+.wrap{max-width:900px;margin:0 auto}
+h1{text-align:center;color:#006b7a;margin:8px 0 12px;font-size:26px}
+.panel{background:#fff;border-radius:22px;padding:14px;box-shadow:0 8px 22px rgba(0,0,0,.08);margin-bottom:12px}
+video{width:100%;max-height:48vh;background:#000;border-radius:18px;margin-top:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+label{font-weight:900;font-size:13px;margin:6px 0 4px;display:block}
+input,select{width:100%;padding:12px;border:1px solid #cbdede;border-radius:14px;font-size:17px;background:#fff}
+.status{margin:10px 0;padding:12px;border-radius:16px;background:#e2f6f4;text-align:center;font-size:19px;font-weight:900}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:10px 0}
+.card{background:#f8fbfb;border:1px solid #dceeee;border-radius:18px;text-align:center;padding:10px 4px}
+.card .label{font-size:13px;font-weight:900;color:#355}.card .num{font-size:34px;font-weight:1000;line-height:1.1;color:#006b7a}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+button{border:0;border-radius:18px;font-weight:1000;color:white;touch-action:manipulation;user-select:none;-webkit-user-select:none;cursor:pointer;min-height:58px;font-size:18px}
+.big{min-height:96px;font-size:24px}
+#startBtn{background:#00796b}#endBtn{background:#1565c0}#slipPlus{background:#d32f2f}#slipMinus{background:#777}
+#hindPlus{background:#8e24aa}#hindMinus{background:#777}
+#undoBtn{background:#fb8c00}#saveBtn{background:#00897b}#exportBtn{background:#455a64}#resetBtn{background:#666}#clearAllBtn{background:#ad1457}
+.flags{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}
+.flag{background:#f8fbfb;border:1px solid #dceeee;border-radius:14px;padding:10px;font-weight:800}
+.flag input{width:auto;transform:scale(1.2);margin-right:6px}
+.note{font-size:14px;line-height:1.55;color:#556;margin-top:10px;background:#f9fbff;border-radius:12px;padding:10px}
+.tableWrap{overflow:auto;margin-top:10px;border-radius:14px}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:14px}
+th{background:#d8f3ee;color:#234;padding:8px;white-space:nowrap}td{border-bottom:1px solid #e7eeee;padding:8px;text-align:center;white-space:nowrap}
+@media(max-width:560px){.grid,.grid3{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr 1fr 1fr}.big{min-height:88px;font-size:22px}h1{font-size:23px}.flags{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Beam Test Analyzer</h1>
+
+<div class="panel">
+  <label>上傳影片</label>
+  <input id="videoInput" type="file" accept="video/*">
+  <video id="video" controls playsinline></video>
+  <div class="note">建議：影片中一隻小鼠可做多次 trial。播放到「開始走 beam」按 Start，播放到「到達終點/安全平台」按 End，系統自動計算 latency。</div>
+</div>
+
+<div class="panel">
+  <div class="grid3">
+    <div><label>小鼠編號</label><input id="mouseId" placeholder="M01"></div>
+    <div><label>Trial</label><input id="trial" value="1" type="number" min="1"></div>
+    <div><label>Group / 備註</label><input id="group" placeholder="6-OHDA / Treatment"></div>
+  </div>
+
+  <div id="status" class="status">尚未標記</div>
+
+  <div class="cards">
+    <div class="card"><div class="label">Start time</div><div id="startTime" class="num">--</div></div>
+    <div class="card"><div class="label">End time</div><div id="endTime" class="num">--</div></div>
+    <div class="card"><div class="label">Latency</div><div id="latency" class="num">--</div></div>
+  </div>
+
+  <div class="cards">
+    <div class="card"><div class="label">Foot slips</div><div id="slipCount" class="num">0</div></div>
+    <div class="card"><div class="label">Hindlimb slips</div><div id="hindCount" class="num">0</div></div>
+    <div class="card"><div class="label">Video time</div><div id="currentTime" class="num">0.00</div></div>
+  </div>
+
+  <div class="btns">
+    <button id="startBtn" class="big">START<br><span style="font-size:16px">開始走 beam</span></button>
+    <button id="endBtn" class="big">END<br><span style="font-size:16px">到達終點</span></button>
+  </div>
+
+  <div class="btns">
+    <button id="slipPlus">Foot slip +1</button>
+    <button id="slipMinus">Foot slip -1</button>
+    <button id="hindPlus">Hindlimb slip +1</button>
+    <button id="hindMinus">Hindlimb slip -1</button>
+  </div>
+
+  <div class="flags">
+    <label class="flag"><input id="fall" type="checkbox">Fall / 掉落</label>
+    <label class="flag"><input id="assisted" type="checkbox">Assisted / 手輔助</label>
+    <label class="flag"><input id="exclude" type="checkbox">Exclude / 排除</label>
+  </div>
+
+  <label>備註</label><input id="note" placeholder="例如：中途停頓、轉身、手碰到尾巴...">
+
+  <div class="btns">
+    <button id="undoBtn">清除本 trial 時間</button>
+    <button id="saveBtn">儲存這筆</button>
+    <button id="exportBtn">匯出 Excel</button>
+    <button id="resetBtn">重設本 trial</button>
+    <button id="clearAllBtn">清空所有資料</button>
+  </div>
+
+  <div class="note">
+    快捷鍵：空白鍵＝播放/暫停，1＝Start，2＝End，F＝Foot slip +1，H＝Hindlimb slip +1，S＝Save。<br>
+    Excel 欄位包含：Mouse、Trial、Group、Start、End、Latency、Foot slips、Hindlimb slips、Fall、Assisted、Exclude、Note。
+  </div>
+
+  <div class="tableWrap">
+    <table>
+      <thead><tr><th>時間</th><th>Mouse</th><th>Trial</th><th>Group</th><th>Start</th><th>End</th><th>Latency(s)</th><th>Foot slips</th><th>Hindlimb slips</th><th>Fall</th><th>Assisted</th><th>Exclude</th><th>Note</th></tr></thead>
+      <tbody id="records"></tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<script>
+let start = null;
+let end = null;
+let footSlips = 0;
+let hindSlips = 0;
+let rows = [];
+
+const $ = id => document.getElementById(id);
+const video = $('video');
+
+function fmt(x){ return (x === null || isNaN(x)) ? '--' : Number(x).toFixed(2); }
+function latency(){ return (start !== null && end !== null && end >= start) ? end - start : null; }
+
+function update(){
+  $('startTime').textContent = fmt(start);
+  $('endTime').textContent = fmt(end);
+  $('latency').textContent = latency() === null ? '--' : fmt(latency()) + ' s';
+  $('slipCount').textContent = footSlips;
+  $('hindCount').textContent = hindSlips;
+  $('currentTime').textContent = fmt(video.currentTime || 0);
+  if(start === null && end === null){ $('status').textContent = '尚未標記'; }
+  else if(start !== null && end === null){ $('status').textContent = '已標記 Start，請標記 End'; }
+  else if(latency() !== null){ $('status').textContent = '完成：Latency = ' + fmt(latency()) + ' s'; }
+  else { $('status').textContent = 'End 早於 Start，請重新標記'; }
+}
+
+function markStart(){ start = video.currentTime || 0; if(end !== null && end < start) end = null; update(); }
+function markEnd(){ end = video.currentTime || 0; update(); }
+function resetTrial(){
+  start = null; end = null; footSlips = 0; hindSlips = 0;
+  $('fall').checked = false; $('assisted').checked = false; $('exclude').checked = false; $('note').value = '';
+  update();
+}
+function clearTimes(){ start = null; end = null; update(); }
+
+function saveRow(){
+  const row = {
+    savedTime: new Date().toLocaleString(),
+    mouse: $('mouseId').value || '',
+    trial: $('trial').value || '',
+    group: $('group').value || '',
+    start: start === null ? '' : fmt(start),
+    end: end === null ? '' : fmt(end),
+    latency: latency() === null ? '' : fmt(latency()),
+    footSlips,
+    hindSlips,
+    fall: $('fall').checked ? 'Yes' : 'No',
+    assisted: $('assisted').checked ? 'Yes' : 'No',
+    exclude: $('exclude').checked ? 'Yes' : 'No',
+    note: $('note').value || ''
+  };
+  rows.push(row);
+  renderRows();
+  const nextTrial = parseInt($('trial').value || 1) + 1;
+  $('trial').value = nextTrial;
+  resetTrial();
+}
+
+function renderRows(){
+  $('records').innerHTML = rows.map(r => `<tr><td>${r.savedTime}</td><td>${r.mouse}</td><td>${r.trial}</td><td>${r.group}</td><td>${r.start}</td><td>${r.end}</td><td>${r.latency}</td><td>${r.footSlips}</td><td>${r.hindSlips}</td><td>${r.fall}</td><td>${r.assisted}</td><td>${r.exclude}</td><td>${r.note}</td></tr>`).join('');
+}
+
+function exportExcel(){
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body><table border="1"><tr><th>Saved time</th><th>Mouse</th><th>Trial</th><th>Group</th><th>Start time (s)</th><th>End time (s)</th><th>Latency to cross (s)</th><th>Foot slips</th><th>Hindlimb slips</th><th>Fall</th><th>Assisted</th><th>Exclude</th><th>Note</th></tr>${rows.map(r=>`<tr><td>${r.savedTime}</td><td>${r.mouse}</td><td>${r.trial}</td><td>${r.group}</td><td>${r.start}</td><td>${r.end}</td><td>${r.latency}</td><td>${r.footSlips}</td><td>${r.hindSlips}</td><td>${r.fall}</td><td>${r.assisted}</td><td>${r.exclude}</td><td>${r.note}</td></tr>`).join('')}</table></body></html>`;
+  const blob = new Blob(['\ufeff' + html], {type:'application/vnd.ms-excel;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'beam_test_results.xls';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+$('videoInput').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if(!file) return;
+  video.src = URL.createObjectURL(file);
+  video.load();
+});
+video.addEventListener('timeupdate', update);
+$('startBtn').onclick = markStart;
+$('endBtn').onclick = markEnd;
+$('slipPlus').onclick = () => { footSlips++; update(); };
+$('slipMinus').onclick = () => { footSlips = Math.max(0, footSlips - 1); update(); };
+$('hindPlus').onclick = () => { hindSlips++; update(); };
+$('hindMinus').onclick = () => { hindSlips = Math.max(0, hindSlips - 1); update(); };
+$('undoBtn').onclick = clearTimes;
+$('saveBtn').onclick = saveRow;
+$('resetBtn').onclick = resetTrial;
+$('exportBtn').onclick = exportExcel;
+$('clearAllBtn').onclick = () => { if(confirm('確定清空所有已儲存資料？')){ rows=[]; renderRows(); } };
+
+document.addEventListener('keydown', e => {
+  const key = e.key.toLowerCase();
+  if(key === ' '){ e.preventDefault(); if(video.paused) video.play(); else video.pause(); }
+  if(key === '1') markStart();
+  if(key === '2') markEnd();
+  if(key === 'f'){ footSlips++; update(); }
+  if(key === 'h'){ hindSlips++; update(); }
+  if(key === 's') saveRow();
+});
+update();
+</script>
+</body>
+</html>
