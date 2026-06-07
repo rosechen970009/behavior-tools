@@ -3,214 +3,121 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Corridor Test Counter</title>
+<title>Corridor Video Analyzer</title>
 <style>
-body{
-  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",Arial,sans-serif;
-  background:#eefdff;
-  margin:0;
-  padding:14px;
-  color:#173b3f;
-}
-.box{
-  max-width:680px;
-  margin:auto;
-  background:white;
-  border-radius:20px;
-  padding:16px;
-  box-shadow:0 6px 18px rgba(0,0,0,.12);
-}
-h1{text-align:center;color:#00796b;font-size:26px;margin:8px 0 14px;}
-.row{display:flex;gap:10px;margin-bottom:10px;}
-.field{flex:1;}
-label{font-weight:800;font-size:14px;display:block;margin-bottom:4px;}
-input{width:100%;font-size:20px;padding:12px;border-radius:12px;border:1px solid #ccc;box-sizing:border-box;}
-.status{text-align:center;font-weight:900;font-size:24px;background:#e2f6f4;border-radius:14px;padding:12px;margin:12px 0;}
-.counts{display:flex;gap:8px;margin:10px 0;}
-.card{flex:1;text-align:center;background:#f8fbfb;border-radius:16px;padding:10px 4px;}
-.name{font-weight:900;font-size:15px;}
-.num{font-weight:900;font-size:44px;}
-.contra{color:#1565c0}.ipsi{color:#d32f2f}.total{color:#00796b}
-.percent{text-align:center;background:#f3fffd;border-radius:16px;padding:14px;margin:10px 0;}
-.percent .big{font-size:42px;font-weight:900;color:#00796b;}
-.buttons{display:flex;gap:12px;margin-top:12px;}
-.bigbtn{
-  flex:1;
-  border:0;
-  border-radius:22px;
-  color:white;
-  font-weight:900;
-  font-size:30px;
-  min-height:150px;
-  -webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;
-}
-#contraBtn{background:#1976d2;}
-#ipsiBtn{background:#d32f2f;}
-.smallbuttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
-.smallbuttons button{border:0;border-radius:16px;color:white;font-weight:900;font-size:18px;min-height:55px;}
-#undoBtn{background:#fb8c00;}#saveBtn{background:#00897b;}#exportBtn{background:#455a64;}#resetBtn{background:#666;}
-.note{font-size:14px;color:#555;line-height:1.5;margin-top:10px;}
-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px;background:white;}
-th,td{padding:8px;border-bottom:1px solid #ddd;text-align:center;}
-th{background:#d8f3ee;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;padding:14px;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",Arial,sans-serif;background:#eefdff;color:#173b3f}
+.wrap{max-width:900px;margin:auto}
+h1{text-align:center;color:#00796b;margin:10px 0 4px;font-size:28px}.sub{text-align:center;color:#4d6b70;margin-bottom:14px;font-weight:700}
+.panel{background:#fff;border-radius:24px;padding:16px;box-shadow:0 10px 26px rgba(0,0,0,.08);margin-bottom:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:block;font-weight:900;font-size:13px;margin:6px 0 4px;color:#244}input,select{width:100%;padding:12px;border:1px solid #cbdede;border-radius:14px;font-size:17px;background:#fff}
+video{width:100%;max-height:55vh;background:#000;border-radius:18px;margin-top:8px}.videoBtns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}.videoBtns button{min-height:46px;font-size:15px;background:#455a64}
+.status{margin:12px 0;padding:12px;border-radius:16px;background:#e2f6f4;text-align:center;font-size:21px;font-weight:1000}.done{background:#dff7e8;color:#087b31}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}.card{background:#f8fbfb;border:1px solid #dceeee;border-radius:18px;text-align:center;padding:10px 4px}.card .label{font-size:13px;font-weight:1000;color:#355}.num{font-size:38px;font-weight:1000;line-height:1.05}.contra{color:#1565c0}.ipsi{color:#d32f2f}.total{color:#00796b}.pct{color:#6a1b9a}
+.mainBtns{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}button{border:0;border-radius:20px;font-weight:1000;color:white;touch-action:manipulation;user-select:none;cursor:pointer}.big{min-height:128px;font-size:30px}#contraBtn{background:#1976d2}#ipsiBtn{background:#d32f2f}
+.smallBtns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.smallBtns button{min-height:52px;font-size:16px}#undoBtn{background:#fb8c00}#saveBtn{background:#00897b}#exportBtn{background:#455a64}#resetBtn{background:#666}#clearAllBtn{background:#8e24aa}
+.note{font-size:14px;line-height:1.5;color:#5a3d66;margin-top:10px}.tableWrap{overflow:auto;margin-top:10px;border-radius:14px;border:1px solid #e1eeee}table{width:100%;border-collapse:collapse;background:#fff;font-size:14px}th{background:#d8f3ee;color:#234;padding:8px;white-space:nowrap}td{border-bottom:1px solid #e7eeee;padding:8px;text-align:center;white-space:nowrap}
+@media(max-width:650px){.grid{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr 1fr}.big{min-height:120px;font-size:26px}.smallBtns,.videoBtns{grid-template-columns:1fr 1fr}h1{font-size:24px}}
 </style>
 </head>
 <body>
-<div class="box">
-<h1>Corridor Test 計數器</h1>
+<div class="wrap">
+<h1>Corridor Video Analyzer</h1>
+<div class="sub">右側 = Ipsi；左側 = Contra｜Contra % = Contra / Total × 100</div>
 
-<div class="row">
-  <div class="field">
-    <label>小鼠編號</label>
-    <input id="mouseId" placeholder="M01">
+<div class="panel">
+  <div class="grid">
+    <div><label>小鼠編號</label><input id="mouseId" placeholder="D1 / M01"></div>
+    <div><label>Group</label><input id="group" placeholder="6-OHDA / Control"></div>
+    <div><label>目標次數</label><input id="limit" type="number" value="20" min="1"></div>
   </div>
-  <div class="field">
-    <label>總上限</label>
-    <input id="limit" type="number" value="20" min="1">
+  <div class="grid2">
+    <div><label>Day / Trial</label><input id="trial" placeholder="Day14 / BT2-COR"></div>
+    <div><label>影片檔案</label><input id="videoFile" type="file" accept="video/*"></div>
+  </div>
+  <video id="video" controls playsinline></video>
+  <div class="videoBtns">
+    <button onclick="togglePlay()">播放 / 暫停</button>
+    <button onclick="seek(-1)">-1 秒</button>
+    <button onclick="seek(1)">+1 秒</button>
+    <button onclick="seek(-0.1)">-0.1 秒</button>
+  </div>
+  <div class="note">快捷鍵：Space = 播放/暫停；A = Contra 左側；L = Ipsi 右側；Z = 復原。</div>
+</div>
+
+<div class="panel">
+  <div id="status" class="status">進行中：0 / 20</div>
+  <div class="cards">
+    <div class="card"><div class="label">Contra<br><small>左側</small></div><div id="contraCount" class="num contra">0</div></div>
+    <div class="card"><div class="label">Ipsi<br><small>右側</small></div><div id="ipsiCount" class="num ipsi">0</div></div>
+    <div class="card"><div class="label">Total</div><div id="totalCount" class="num total">0</div></div>
+    <div class="card"><div class="label">Contra %</div><div id="contraPercent" class="num pct">0.0</div></div>
+  </div>
+  <div class="mainBtns">
+    <button id="contraBtn" class="big" onclick="add('contra')">CONTRA<br><span style="font-size:21px">左側</span></button>
+    <button id="ipsiBtn" class="big" onclick="add('ipsi')">IPSI<br><span style="font-size:21px">右側</span></button>
+  </div>
+  <div class="smallBtns">
+    <button id="undoBtn" onclick="undo()">復原</button>
+    <button id="saveBtn" onclick="saveMouse()">儲存小鼠</button>
+    <button id="exportBtn" onclick="exportExcel()">匯出 Excel</button>
+    <button id="resetBtn" onclick="resetCurrent()">重設目前</button>
   </div>
 </div>
 
-<label>Trial / 備註</label>
-<input id="trial" placeholder="Day 14 / pre-test">
-
-<div id="status" class="status">進行中：0 / 20</div>
-
-<div class="counts">
-  <div class="card"><div class="name">Contra<br><small>左側</small></div><div id="contraCount" class="num contra">0</div></div>
-  <div class="card"><div class="name">Ipsi<br><small>右側</small></div><div id="ipsiCount" class="num ipsi">0</div></div>
-  <div class="card"><div class="name">Total</div><div id="totalCount" class="num total">0</div></div>
+<div class="panel">
+  <b>Event Log（每次按鍵的影片時間）</b>
+  <div class="tableWrap"><table><thead><tr><th>#</th><th>影片時間(s)</th><th>Side</th></tr></thead><tbody id="events"></tbody></table></div>
 </div>
 
-<div class="percent">
-  <div><b>Contralateral % = Contra / Total × 100</b></div>
-  <div id="contraPercent" class="big">0.0%</div>
+<div class="panel">
+  <b>Saved Mice</b>
+  <div class="tableWrap"><table><thead><tr><th>時間</th><th>Mouse</th><th>Group</th><th>Trial</th><th>Contra</th><th>Ipsi</th><th>Total</th><th>Contra %</th></tr></thead><tbody id="records"></tbody></table></div>
+  <div class="smallBtns" style="grid-template-columns:1fr"><button id="clearAllBtn" onclick="clearAll()">清除所有已儲存資料</button></div>
 </div>
-
-<div class="buttons">
-  <button type="button" id="contraBtn" class="bigbtn" onclick="addCount('contra')">CONTRA<br><span style="font-size:20px">左側</span></button>
-  <button type="button" id="ipsiBtn" class="bigbtn" onclick="addCount('ipsi')">IPSI<br><span style="font-size:20px">右側</span></button>
-</div>
-
-<div class="smallbuttons">
-  <button type="button" id="undoBtn" onclick="undoCount()">復原</button>
-  <button type="button" id="saveBtn" onclick="saveData()">儲存這筆</button>
-  <button type="button" id="exportBtn" onclick="exportCSV()">匯出 CSV</button>
-  <button type="button" id="resetBtn" onclick="resetCurrent()">重設目前</button>
-</div>
-
-<div class="note">右側 = Ipsi；左側 = Contra。達到上限後只停止計數，沒有聲音、沒有震動、沒有 disabled。</div>
-
-<table>
-<thead><tr><th>時間</th><th>小鼠</th><th>Trial</th><th>Contra</th><th>Ipsi</th><th>Total</th><th>Contra %</th></tr></thead>
-<tbody id="records"></tbody>
-</table>
 </div>
 
 <script>
-var contra = 0;
-var ipsi = 0;
-var historyList = [];
-var savedRows = [];
-
-function el(id){ return document.getElementById(id); }
-function getLimit(){
-  var v = parseInt(el('limit').value, 10);
-  if(isNaN(v) || v < 1) v = 20;
-  return v;
+let contra=0, ipsi=0, history=[], rows=[];
+const $=id=>document.getElementById(id);
+const video=$('video');
+$('videoFile').addEventListener('change', e=>{ const f=e.target.files[0]; if(f){ video.src=URL.createObjectURL(f); }});
+function getLimit(){return Math.max(1, parseInt($('limit').value||20));}
+function total(){return contra+ipsi;}
+function pct(){return total()? contra/total()*100:0;}
+function done(){return total()>=getLimit();}
+function vtime(){return video && !isNaN(video.currentTime)? video.currentTime:0;}
+function fmt(t){return Number(t).toFixed(2);}
+function update(){
+ $('contraCount').textContent=contra; $('ipsiCount').textContent=ipsi; $('totalCount').textContent=total(); $('contraPercent').textContent=pct().toFixed(1);
+ $('status').textContent=done()? '✅ Completed：'+total()+' / '+getLimit() : '進行中：'+total()+' / '+getLimit();
+ $('status').className='status '+(done()?'done':'');
+ renderEvents();
 }
-function total(){ return contra + ipsi; }
-function percent(){ return total() === 0 ? 0 : contra / total() * 100; }
-function isDone(){ return total() >= getLimit(); }
-
-function updateScreen(){
-  el('contraCount').innerText = contra;
-  el('ipsiCount').innerText = ipsi;
-  el('totalCount').innerText = total();
-  el('contraPercent').innerText = percent().toFixed(1) + '%';
-  if(isDone()){
-    el('status').innerText = '✅ Completed：' + total() + ' / ' + getLimit();
-    el('status').style.background = '#dff7e8';
-    el('status').style.color = '#087b31';
-  }else{
-    el('status').innerText = '進行中：' + total() + ' / ' + getLimit();
-    el('status').style.background = '#e2f6f4';
-    el('status').style.color = '#173b3f';
-  }
+function add(side){ if(done()) return; history.push({side:side,time:vtime()}); if(side==='contra') contra++; else ipsi++; update(); }
+function undo(){ const last=history.pop(); if(!last)return; if(last.side==='contra') contra--; else ipsi--; update(); }
+function resetCurrent(){ contra=0; ipsi=0; history=[]; update(); }
+function togglePlay(){ if(video.paused) video.play(); else video.pause(); }
+function seek(s){ video.currentTime=Math.max(0,(video.currentTime||0)+s); }
+function renderEvents(){ $('events').innerHTML=history.map((e,i)=>`<tr><td>${i+1}</td><td>${fmt(e.time)}</td><td>${e.side==='contra'?'Contra 左側':'Ipsi 右側'}</td></tr>`).join(''); }
+function saveMouse(){
+ rows.push({saved:new Date().toLocaleString(), mouse:$('mouseId').value||'', group:$('group').value||'', trial:$('trial').value||'', contra, ipsi, total:total(), percent:pct().toFixed(1), events:JSON.parse(JSON.stringify(history))});
+ renderRows(); resetCurrent();
 }
-
-function addCount(side){
-  if(isDone()) return false;
-  historyList.push(side);
-  if(side === 'contra') contra += 1;
-  if(side === 'ipsi') ipsi += 1;
-  updateScreen();
-  return false;
+function renderRows(){ $('records').innerHTML=rows.map(r=>`<tr><td>${r.saved}</td><td>${r.mouse}</td><td>${r.group}</td><td>${r.trial}</td><td>${r.contra}</td><td>${r.ipsi}</td><td>${r.total}</td><td>${r.percent}</td></tr>`).join(''); }
+function clearAll(){ if(confirm('確定清除所有已儲存資料？')){rows=[];renderRows();}}
+function exportExcel(){
+ let summary='<table><tr><th>Saved time</th><th>Mouse</th><th>Group</th><th>Trial</th><th>Contralateral</th><th>Ipsilateral</th><th>Total</th><th>Contralateral_percent</th></tr>';
+ rows.forEach(r=>{summary+=`<tr><td>${r.saved}</td><td>${r.mouse}</td><td>${r.group}</td><td>${r.trial}</td><td>${r.contra}</td><td>${r.ipsi}</td><td>${r.total}</td><td>${r.percent}</td></tr>`}); summary+='</table>';
+ let events='<table><tr><th>Mouse</th><th>Group</th><th>Trial</th><th>Event_number</th><th>Video_time_sec</th><th>Side</th></tr>';
+ rows.forEach(r=>{r.events.forEach((e,i)=>{events+=`<tr><td>${r.mouse}</td><td>${r.group}</td><td>${r.trial}</td><td>${i+1}</td><td>${fmt(e.time)}</td><td>${e.side==='contra'?'Contra_Left':'Ipsi_Right'}</td></tr>`})}); events+='</table>';
+ const html=`<html><head><meta charset="UTF-8"></head><body><h2>Summary</h2>${summary}<br><h2>Event Log</h2>${events}</body></html>`;
+ const blob=new Blob(['\ufeff'+html],{type:'application/vnd.ms-excel;charset=utf-8;'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='corridor_video_results.xls'; a.click(); URL.revokeObjectURL(url);
 }
-
-function undoCount(){
-  if(historyList.length === 0) return false;
-  var last = historyList.pop();
-  if(last === 'contra' && contra > 0) contra -= 1;
-  if(last === 'ipsi' && ipsi > 0) ipsi -= 1;
-  updateScreen();
-  return false;
-}
-
-function resetCurrent(){
-  contra = 0;
-  ipsi = 0;
-  historyList = [];
-  updateScreen();
-  return false;
-}
-
-function saveData(){
-  var row = {
-    time: new Date().toLocaleString(),
-    mouse: el('mouseId').value,
-    trial: el('trial').value,
-    contra: contra,
-    ipsi: ipsi,
-    total: total(),
-    pct: percent().toFixed(1)
-  };
-  savedRows.push(row);
-  renderRows();
-  resetCurrent();
-  return false;
-}
-
-function renderRows(){
-  var html = '';
-  for(var i=0;i<savedRows.length;i++){
-    var r = savedRows[i];
-    html += '<tr><td>'+r.time+'</td><td>'+r.mouse+'</td><td>'+r.trial+'</td><td>'+r.contra+'</td><td>'+r.ipsi+'</td><td>'+r.total+'</td><td>'+r.pct+'</td></tr>';
-  }
-  el('records').innerHTML = html;
-}
-
-function exportCSV(){
-  var lines = [];
-  lines.push('Time,Mouse,Trial,Contralateral,Ipsilateral,Total,Contralateral_percent');
-  for(var i=0;i<savedRows.length;i++){
-    var r = savedRows[i];
-    lines.push('"'+r.time+'","'+r.mouse+'","'+r.trial+'",'+r.contra+','+r.ipsi+','+r.total+','+r.pct);
-  }
-  var blob = new Blob(['\ufeff' + lines.join('\n')], {type:'text/csv;charset=utf-8;'});
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = 'corridor_test_results.csv';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  return false;
-}
-
-el('limit').addEventListener('change', updateScreen);
-updateScreen();
+$('limit').onchange=update;
+document.addEventListener('keydown',e=>{ const tag=(document.activeElement.tagName||'').toLowerCase(); if(tag==='input') return; const k=e.key.toLowerCase(); if(k===' '){e.preventDefault();togglePlay();} if(k==='a') add('contra'); if(k==='l') add('ipsi'); if(k==='z') undo(); });
+update();
 </script>
 </body>
 </html>
