@@ -3,104 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beam Test Video Analyzer</title>
+<title>Beam Test Analyzer - Hindlimb Only</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;padding:16px;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",Arial,sans-serif;background:#eefcff;color:#173b3f}
-.wrap{max-width:1100px;margin:auto}
-h1{text-align:center;color:#00796b;margin:8px 0 4px;font-size:30px}.sub{text-align:center;color:#4d6b70;margin-bottom:14px;font-weight:800}
-.panel{background:#fff;border-radius:24px;padding:16px;box-shadow:0 10px 28px rgba(0,0,0,.08);margin-bottom:14px}
-.layout{display:grid;grid-template-columns:1.25fr .75fr;gap:14px;align-items:start}
-.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-label{display:block;font-weight:900;font-size:13px;margin:6px 0 4px;color:#244}input,textarea{width:100%;padding:12px;border:1px solid #cbdede;border-radius:14px;font-size:17px;background:#fff}textarea{min-height:70px;resize:vertical}
-video{width:100%;max-height:62vh;background:#000;border-radius:18px;margin-top:8px;display:block}.videoBtns{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px}.videoBtns button{min-height:44px;font-size:14px;background:#455a64}
-.status{margin:12px 0;padding:12px;border-radius:16px;background:#e2f6f4;text-align:center;font-size:21px;font-weight:1000}.done{background:#dff7e8;color:#087b31}.warn{background:#fff3cd;color:#8a5a00}
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:8px}.card{background:#f8fbfb;border:1px solid #dceeee;border-radius:18px;text-align:center;padding:10px 4px}.card .label{font-size:13px;font-weight:1000;color:#355}.num{font-size:34px;font-weight:1000;line-height:1.05}.lat{color:#00796b}.slip{color:#1565c0}.hind{color:#6a1b9a}.flag{color:#d32f2f}
-.mainBtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}button{border:0;border-radius:18px;font-weight:1000;color:white;touch-action:manipulation;user-select:none;cursor:pointer}.big{min-height:82px;font-size:24px}#startBtn{background:#00796b}#finishBtn{background:#d32f2f}
-.smallBtns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.smallBtns button{min-height:52px;font-size:15px}#footBtn{background:#1976d2}#hindBtn{background:#6a1b9a}#undoBtn{background:#fb8c00}#fallBtn{background:#c62828}#assistBtn{background:#8e24aa}#excludeBtn{background:#5d4037}#saveBtn{background:#00897b}#exportBtn{background:#455a64}#resetBtn{background:#666}
-.kbd{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:10px;font-size:13px}.key{background:#f0fbfa;border:1px solid #d4eeee;border-radius:12px;padding:8px}.key b{color:#00796b}.note{font-size:14px;line-height:1.5;color:#5a3d66;margin-top:10px}.tableWrap{overflow:auto;margin-top:10px;border-radius:14px;border:1px solid #e1eeee}table{width:100%;border-collapse:collapse;background:#fff;font-size:14px}th{background:#d8f3ee;color:#234;padding:8px;white-space:nowrap}td{border-bottom:1px solid #e7eeee;padding:8px;text-align:center;white-space:nowrap}
-@media(max-width:850px){.layout{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.videoBtns,.smallBtns{grid-template-columns:1fr 1fr}.kbd{grid-template-columns:1fr}.big{min-height:72px;font-size:22px}h1{font-size:25px}}
+.wrap{max-width:980px;margin:auto}
+h1{text-align:center;color:#00796b;margin:8px 0 4px;font-size:30px}.sub{text-align:center;color:#4d6b70;margin-bottom:14px;font-weight:700}.panel{background:white;border-radius:24px;padding:16px;box-shadow:0 10px 26px rgba(0,0,0,.08);margin-bottom:14px}.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{display:block;font-weight:900;font-size:13px;margin:6px 0 4px;color:#244}input{width:100%;padding:12px;border:1px solid #cbdede;border-radius:14px;font-size:17px;background:#fff}video{width:100%;max-height:56vh;background:#000;border-radius:18px;margin-top:8px}.videoBtns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}.videoBtns button{min-height:46px;font-size:15px;background:#455a64}.status{margin:12px 0;padding:12px;border-radius:16px;background:#e2f6f4;text-align:center;font-size:21px;font-weight:1000}.done{background:#dff7e8;color:#087b31}.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.card{background:#f8fbfb;border:1px solid #dceeee;border-radius:18px;text-align:center;padding:10px 4px}.card .label{font-size:13px;font-weight:1000;color:#355}.num{font-size:38px;font-weight:1000;line-height:1.05}.start{color:#1565c0}.finish{color:#00796b}.slip{color:#d32f2f}.mainBtns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:12px}button{border:0;border-radius:20px;font-weight:1000;color:white;touch-action:manipulation;user-select:none;cursor:pointer}.big{min-height:110px;font-size:28px}#startBtn{background:#1976d2}#finishBtn{background:#00897b}#slipBtn{background:#d32f2f}.smallBtns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.smallBtns button{min-height:52px;font-size:16px}#undoBtn{background:#fb8c00}#saveBtn{background:#00897b}#exportBtn{background:#455a64}#resetBtn{background:#666}.note{font-size:14px;line-height:1.6;color:#5a3d66;margin-top:10px;background:#faf5ff;border-radius:14px;padding:10px}.tableWrap{overflow:auto;margin-top:10px;border-radius:14px;border:1px solid #e1eeee}table{width:100%;border-collapse:collapse;background:#fff;font-size:14px}th{background:#d8f3ee;color:#234;padding:8px;white-space:nowrap}td{border-bottom:1px solid #e7eeee;padding:8px;text-align:center;white-space:nowrap}@media(max-width:720px){.grid{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.mainBtns{grid-template-columns:1fr}.smallBtns,.videoBtns{grid-template-columns:1fr 1fr}.big{min-height:90px;font-size:24px}h1{font-size:25px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<h1>Beam Test Video Analyzer</h1>
-<div class="sub">Mac 看片模式｜1 = Start，2 = Finish，Q = Foot slip，W = Hindlimb slip，D = Save</div>
+<h1>Beam Test Analyzer</h1>
+<div class="sub">只記錄後腳 Hindlimb slips｜Traversal time = Finish - Start</div>
 
 <div class="panel">
   <div class="grid">
     <div><label>小鼠編號</label><input id="mouseId" placeholder="D1 / M01"></div>
     <div><label>Group</label><input id="group" placeholder="6-OHDA / Control"></div>
-    <div><label>Trial</label><input id="trial" value="1" placeholder="1 / 2 / 3"></div>
+    <div><label>Trial</label><input id="trial" placeholder="Trial 1"></div>
   </div>
   <div class="grid2">
-    <div><label>Day / Session</label><input id="day" placeholder="Day14 / BT2"></div>
-    <div><label>影片檔</label><input id="videoFile" type="file" accept="video/*"></div>
-  </div>
-</div>
-
-<div class="layout">
-  <div class="panel">
-    <video id="video" controls playsinline></video>
-    <div class="videoBtns">
-      <button onclick="togglePlay()">Space 播放/暫停</button>
-      <button onclick="jump(-5)">← 5s</button>
-      <button onclick="jump(-1)">← 1s</button>
-      <button onclick="jump(1)">1s →</button>
-      <button onclick="jump(5)">5s →</button>
-    </div>
-  </div>
-
-  <div class="panel">
-    <div id="status" class="status">等待標記 Start</div>
-    <div class="cards">
-      <div class="card"><div class="label">Start time</div><div id="startTime" class="num lat">--</div></div>
-      <div class="card"><div class="label">Finish time</div><div id="finishTime" class="num lat">--</div></div>
-      <div class="card"><div class="label">Latency</div><div id="latency" class="num lat">--</div></div>
-      <div class="card"><div class="label">Foot slips</div><div id="footSlips" class="num slip">0</div></div>
-      <div class="card"><div class="label">Hindlimb slips</div><div id="hindSlips" class="num hind">0</div></div>
-      <div class="card"><div class="label">Flags</div><div id="flags" class="num flag">--</div></div>
-    </div>
-
-    <div class="mainBtns">
-      <button id="startBtn" class="big" onclick="markStart()">1<br>START</button>
-      <button id="finishBtn" class="big" onclick="markFinish()">2<br>FINISH</button>
-    </div>
-
-    <div class="smallBtns">
-      <button id="footBtn" onclick="addFootSlip()">Q Foot +1</button>
-      <button id="hindBtn" onclick="addHindSlip()">W Hind +1</button>
-      <button id="undoBtn" onclick="undo()">Z Undo</button>
-      <button id="fallBtn" onclick="toggleFlag('fall')">F Fall</button>
-      <button id="assistBtn" onclick="toggleFlag('assisted')">A Assisted</button>
-      <button id="excludeBtn" onclick="toggleFlag('exclude')">X Exclude</button>
-      <button id="saveBtn" onclick="saveTrial()">D Save</button>
-      <button id="exportBtn" onclick="exportExcel()">Export Excel</button>
-      <button id="resetBtn" onclick="resetTrial()">Reset Trial</button>
-    </div>
-
-    <label>備註</label>
-    <textarea id="note" placeholder="例如：中途停頓、回頭、手碰到、影片不清楚"></textarea>
-
-    <div class="kbd">
-      <div class="key"><b>1</b> Start beam crossing</div>
-      <div class="key"><b>2</b> Finish / reach platform</div>
-      <div class="key"><b>Q</b> Foot slip +1</div>
-      <div class="key"><b>W</b> Hindlimb slip +1</div>
-      <div class="key"><b>F</b> Fall toggle</div>
-      <div class="key"><b>A</b> Assisted toggle</div>
-      <div class="key"><b>X</b> Exclude toggle</div>
-      <div class="key"><b>D</b> Save trial</div>
-      <div class="key"><b>Z</b> Undo last event</div>
-      <div class="key"><b>Space</b> Play / Pause</div>
-    </div>
+    <div><label>Day / Test</label><input id="day" placeholder="Day14 / Beam"></div>
+    <div><label>備註</label><input id="note" placeholder="optional"></div>
   </div>
 </div>
 
 <div class="panel">
+  <label>上傳影片</label>
+  <input id="videoFile" type="file" accept="video/*">
+  <video id="video" controls playsinline></video>
+  <div class="videoBtns">
+    <button onclick="togglePlay()">Space 播放/暫停</button>
+    <button onclick="seek(-1)">← -1秒</button>
+    <button onclick="seek(1)">→ +1秒</button>
+    <button onclick="seek(-0.1)">-0.1秒</button>
+  </div>
+</div>
+
+<div class="panel">
+  <div id="status" class="status">尚未開始</div>
+
+  <div class="cards">
+    <div class="card"><div class="label">Start Time</div><div id="startTime" class="num start">--</div></div>
+    <div class="card"><div class="label">Finish Time</div><div id="finishTime" class="num finish">--</div></div>
+    <div class="card"><div class="label">Hindlimb Slips<br><small>後腳滑落次數</small></div><div id="slipCount" class="num slip">0</div></div>
+  </div>
+
+  <div class="cards" style="margin-top:8px">
+    <div class="card"><div class="label">Traversal Time</div><div id="latency" class="num total">--</div></div>
+    <div class="card"><div class="label">Current Video Time</div><div id="currentTime" class="num">0.00</div></div>
+    <div class="card"><div class="label">Saved Trials</div><div id="savedCount" class="num">0</div></div>
+  </div>
+
+  <div class="mainBtns">
+    <button id="startBtn" class="big" onclick="markStart()">START<br><span style="font-size:20px">按 1</span></button>
+    <button id="finishBtn" class="big" onclick="markFinish()">FINISH<br><span style="font-size:20px">按 2</span></button>
+    <button id="slipBtn" class="big" onclick="addSlip()">HINDLIMB SLIP +1<br><span style="font-size:20px">按 W</span></button>
+  </div>
+
+  <div class="smallBtns">
+    <button id="undoBtn" onclick="undo()">復原 Z</button>
+    <button id="saveBtn" onclick="saveTrial()">儲存 D</button>
+    <button id="exportBtn" onclick="exportExcel()">匯出 Excel</button>
+    <button id="resetBtn" onclick="resetTrial()">重設目前 Trial</button>
+  </div>
+
+  <div class="note">
+    快捷鍵：1 = Start，2 = Finish，W = 後腳 slip +1，Z = 復原，D = 儲存，Space = 播放/暫停，←/→ = 快退/快進 1 秒。<br>
+    本版已移除 Fall、Assisted、Exclude，只保留後腳滑落次數與通過時間。
+  </div>
+
   <div class="tableWrap">
     <table>
-      <thead><tr><th>Time saved</th><th>Mouse</th><th>Group</th><th>Day</th><th>Trial</th><th>Start</th><th>Finish</th><th>Latency(s)</th><th>Foot slips</th><th>Hind slips</th><th>Fall</th><th>Assisted</th><th>Exclude</th><th>Note</th></tr></thead>
+      <thead><tr><th>時間</th><th>Mouse</th><th>Group</th><th>Day</th><th>Trial</th><th>Start</th><th>Finish</th><th>Traversal Time</th><th>Hindlimb Slips</th><th>備註</th></tr></thead>
       <tbody id="records"></tbody>
     </table>
   </div>
@@ -110,12 +85,9 @@ video{width:100%;max-height:62vh;background:#000;border-radius:18px;margin-top:8
 <script>
 let start = null;
 let finish = null;
-let foot = 0;
-let hind = 0;
-let flags = {fall:false, assisted:false, exclude:false};
-let history = [];
+let hindlimbSlips = 0;
+let actions = [];
 let rows = [];
-
 const $ = id => document.getElementById(id);
 const video = $('video');
 
@@ -126,161 +98,115 @@ $('videoFile').addEventListener('change', e => {
   video.load();
 });
 
-function t(){ return video.currentTime || 0; }
+function now(){ return video.currentTime || 0; }
 function fmt(x){ return x === null || isNaN(x) ? '--' : Number(x).toFixed(2); }
-function latency(){ return start !== null && finish !== null ? finish - start : null; }
-
-function setStatus(text, cls=''){
-  $('status').textContent = text;
-  $('status').className = 'status ' + cls;
-}
+function latency(){ return (start !== null && finish !== null) ? finish - start : null; }
 
 function update(){
   $('startTime').textContent = fmt(start);
   $('finishTime').textContent = fmt(finish);
-  $('latency').textContent = latency() === null ? '--' : fmt(latency()) + 's';
-  $('footSlips').textContent = foot;
-  $('hindSlips').textContent = hind;
-  const active = [];
-  if(flags.fall) active.push('Fall');
-  if(flags.assisted) active.push('Assist');
-  if(flags.exclude) active.push('Exclude');
-  $('flags').textContent = active.length ? active.join(' / ') : '--';
+  $('slipCount').textContent = hindlimbSlips;
+  $('latency').textContent = latency() === null ? '--' : fmt(latency()) + ' s';
+  $('currentTime').textContent = fmt(now());
+  $('savedCount').textContent = rows.length;
 
-  if(start === null) setStatus('等待標記 Start');
-  else if(finish === null) setStatus('已標記 Start，等待 Finish', 'warn');
-  else setStatus('✅ Trial completed：Latency ' + fmt(latency()) + ' s', 'done');
+  if(start === null){
+    $('status').textContent = '尚未開始：按 1 標記 Start';
+    $('status').className = 'status';
+  }else if(finish === null){
+    $('status').textContent = '進行中：按 2 標記 Finish，可用 W 計後腳 slips';
+    $('status').className = 'status';
+  }else{
+    $('status').textContent = '✅ 完成：Traversal Time = ' + fmt(latency()) + ' s；Hindlimb slips = ' + hindlimbSlips;
+    $('status').className = 'status done';
+  }
 }
 
 function markStart(){
-  history.push({type:'start', old:start});
-  start = t();
-  if(finish !== null && finish < start) finish = null;
+  actions.push({type:'start', old:start});
+  start = now();
   update();
 }
-
 function markFinish(){
-  history.push({type:'finish', old:finish});
-  finish = t();
+  actions.push({type:'finish', old:finish});
+  finish = now();
   update();
 }
-
-function addFootSlip(){
-  history.push({type:'foot'});
-  foot++;
+function addSlip(){
+  actions.push({type:'slip'});
+  hindlimbSlips++;
   update();
 }
-
-function addHindSlip(){
-  history.push({type:'hind'});
-  hind++;
-  update();
-}
-
-function toggleFlag(name){
-  history.push({type:'flag', name, old:flags[name]});
-  flags[name] = !flags[name];
-  update();
-}
-
 function undo(){
-  const last = history.pop();
+  const last = actions.pop();
   if(!last) return;
   if(last.type === 'start') start = last.old;
   if(last.type === 'finish') finish = last.old;
-  if(last.type === 'foot') foot = Math.max(0, foot-1);
-  if(last.type === 'hind') hind = Math.max(0, hind-1);
-  if(last.type === 'flag') flags[last.name] = last.old;
+  if(last.type === 'slip') hindlimbSlips = Math.max(0, hindlimbSlips - 1);
   update();
 }
-
 function resetTrial(){
-  start = null;
-  finish = null;
-  foot = 0;
-  hind = 0;
-  flags = {fall:false, assisted:false, exclude:false};
-  history = [];
-  $('note').value = '';
+  start = null; finish = null; hindlimbSlips = 0; actions = [];
   update();
 }
-
 function saveTrial(){
   const row = {
-    saved: new Date().toLocaleString(),
+    time: new Date().toLocaleString(),
     mouse: $('mouseId').value || '',
     group: $('group').value || '',
     day: $('day').value || '',
     trial: $('trial').value || '',
     start: start === null ? '' : fmt(start),
     finish: finish === null ? '' : fmt(finish),
-    latency: latency() === null ? '' : fmt(latency()),
-    foot, hind,
-    fall: flags.fall ? 'Yes' : 'No',
-    assisted: flags.assisted ? 'Yes' : 'No',
-    exclude: flags.exclude ? 'Yes' : 'No',
+    traversal: latency() === null ? '' : fmt(latency()),
+    hindlimbSlips: hindlimbSlips,
     note: $('note').value || ''
   };
   rows.push(row);
   renderRows();
-  const n = parseInt($('trial').value || '0');
-  if(!isNaN(n)) $('trial').value = String(n + 1);
   resetTrial();
 }
-
 function renderRows(){
-  $('records').innerHTML = rows.map(r => `<tr><td>${r.saved}</td><td>${r.mouse}</td><td>${r.group}</td><td>${r.day}</td><td>${r.trial}</td><td>${r.start}</td><td>${r.finish}</td><td>${r.latency}</td><td>${r.foot}</td><td>${r.hind}</td><td>${r.fall}</td><td>${r.assisted}</td><td>${r.exclude}</td><td>${escapeHtml(r.note)}</td></tr>`).join('');
+  $('records').innerHTML = rows.map(r => `<tr><td>${r.time}</td><td>${r.mouse}</td><td>${r.group}</td><td>${r.day}</td><td>${r.trial}</td><td>${r.start}</td><td>${r.finish}</td><td>${r.traversal}</td><td>${r.hindlimbSlips}</td><td>${r.note}</td></tr>`).join('');
 }
-
-function escapeHtml(s){
-  return String(s).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-}
-
-function togglePlay(){
-  if(!video.src) return;
-  if(video.paused) video.play(); else video.pause();
-}
-
-function jump(sec){
-  if(!video.src) return;
-  video.currentTime = Math.max(0, video.currentTime + sec);
-}
-
 function exportExcel(){
-  let html = `<html><head><meta charset="UTF-8"></head><body><table border="1"><tr><th>Time saved</th><th>Mouse</th><th>Group</th><th>Day</th><th>Trial</th><th>Start</th><th>Finish</th><th>Latency(s)</th><th>Foot slips</th><th>Hindlimb slips</th><th>Fall</th><th>Assisted</th><th>Exclude</th><th>Note</th></tr>`;
-  rows.forEach(r => {
-    html += `<tr><td>${r.saved}</td><td>${r.mouse}</td><td>${r.group}</td><td>${r.day}</td><td>${r.trial}</td><td>${r.start}</td><td>${r.finish}</td><td>${r.latency}</td><td>${r.foot}</td><td>${r.hind}</td><td>${r.fall}</td><td>${r.assisted}</td><td>${r.exclude}</td><td>${escapeHtml(r.note)}</td></tr>`;
-  });
-  html += `</table></body></html>`;
+  const table = `
+  <table border="1">
+    <tr><th>Time</th><th>Mouse</th><th>Group</th><th>Day</th><th>Trial</th><th>Start_time_s</th><th>Finish_time_s</th><th>Traversal_time_s</th><th>Hindlimb_slips</th><th>Note</th></tr>
+    ${rows.map(r => `<tr><td>${r.time}</td><td>${r.mouse}</td><td>${r.group}</td><td>${r.day}</td><td>${r.trial}</td><td>${r.start}</td><td>${r.finish}</td><td>${r.traversal}</td><td>${r.hindlimbSlips}</td><td>${r.note}</td></tr>`).join('')}
+  </table>`;
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>${table}</body></html>`;
   const blob = new Blob(['\ufeff' + html], {type:'application/vnd.ms-excel;charset=utf-8;'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'beam_test_results.xls';
+  a.download = 'beam_test_hindlimb_only.xls';
   a.click();
   URL.revokeObjectURL(url);
 }
+function togglePlay(){
+  if(video.paused) video.play(); else video.pause();
+}
+function seek(sec){
+  video.currentTime = Math.max(0, now() + sec);
+  update();
+}
+video.addEventListener('timeupdate', update);
 
 document.addEventListener('keydown', e => {
   const tag = document.activeElement.tagName.toLowerCase();
-  if(tag === 'input' || tag === 'textarea') return;
-
+  if(tag === 'input') return;
   const key = e.key.toLowerCase();
   if(key === ' '){ e.preventDefault(); togglePlay(); }
   if(key === '1') markStart();
   if(key === '2') markFinish();
-  if(key === 'q') addFootSlip();
-  if(key === 'w') addHindSlip();
-  if(key === 'f') toggleFlag('fall');
-  if(key === 'a') toggleFlag('assisted');
-  if(key === 'x') toggleFlag('exclude');
-  if(key === 'd') saveTrial();
+  if(key === 'w') addSlip();
   if(key === 'z') undo();
-  if(key === 'arrowleft'){ e.preventDefault(); jump(-1); }
-  if(key === 'arrowright'){ e.preventDefault(); jump(1); }
+  if(key === 'd') saveTrial();
+  if(e.key === 'ArrowLeft'){ e.preventDefault(); seek(-1); }
+  if(e.key === 'ArrowRight'){ e.preventDefault(); seek(1); }
 });
 
-document.body.addEventListener('click', () => window.focus());
 update();
 </script>
 </body>
